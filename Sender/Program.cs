@@ -1,5 +1,5 @@
-﻿using Sender;
-using System.IO.Ports;
+﻿using System.IO.Ports;
+using Common;
 
 Console.WriteLine("SENDER");
 
@@ -14,9 +14,9 @@ Thread.Sleep(500);
 
 var serialPort = new SerialPort("COM1", 9600);
 serialPort.DataReceived += DataHandler.DataReceived;
-
+serialPort.ErrorReceived += Common.DataHandler.ErrorReceived;
+serialPort.PinChanged += Common.DataHandler.PinChanged;
 //load 894 file and pass it through the reciever
-
 
 
 try
@@ -24,7 +24,7 @@ try
     if (!serialPort.IsOpen)
         serialPort.Open();
 
-    Console.WriteLine("I'm sending a message!");
+    Console.WriteLine("I'm on " + serialPort.PortName);
 
     serialPort.WriteLine("did you see this?");
 
@@ -36,7 +36,6 @@ try
 
     Thread.Sleep(500);
     serialPort.WriteLine("that's all I have to say.");
-
 }
 catch (UnauthorizedAccessException ex)
 {
@@ -45,7 +44,6 @@ catch (UnauthorizedAccessException ex)
 catch (IOException ex)
 {
     Console.WriteLine(ex);
-
 }
 
 Console.ReadLine();

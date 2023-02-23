@@ -1,17 +1,16 @@
-﻿using Receiver;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 
 Console.WriteLine("RECEIVER");
 
 
 Console.WriteLine("Available Ports:");
-foreach (string s in SerialPort.GetPortNames())
-{
-    Console.WriteLine("   {0}", s);
-}
+foreach (var s in SerialPort.GetPortNames()) Console.WriteLine("   {0}", s);
 
 var serialPort = new SerialPort("COM2", 9600);
-serialPort.DataReceived += DataHandler.DataReceived;
+serialPort.DataReceived += Common.DataHandler.DataReceived;
+serialPort.ErrorReceived += Common.DataHandler.ErrorReceived;
+serialPort.PinChanged += Common.DataHandler.PinChanged;
+
 
 //serialPort.PinChanged
 
@@ -48,8 +47,14 @@ try
     if (!serialPort.IsOpen)
         serialPort.Open();
 
+    Console.WriteLine("I'm on " + serialPort.PortName);
+
+    Thread.Sleep(500);
     serialPort.WriteLine("Yo brosif.");
 
+
+    Thread.Sleep(500);
+    serialPort.Write("hello");
 }
 catch (UnauthorizedAccessException ex)
 {
