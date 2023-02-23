@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using Sender;
+using System.IO.Ports;
 
 Console.WriteLine("SENDER");
 
@@ -12,6 +13,10 @@ Console.WriteLine("SENDER");
 Thread.Sleep(500);
 
 var serialPort = new SerialPort("COM1", 9600);
+serialPort.DataReceived += DataHandler.DataReceived;
+
+//load 894 file and pass it through the reciever
+
 
 
 try
