@@ -6,7 +6,8 @@ Console.WriteLine("RECEIVER");
 Console.WriteLine("Available Ports:");
 foreach (var s in SerialPort.GetPortNames()) Console.WriteLine("   {0}", s);
 
-var serialPort = new SerialPort("COM2", 9600);
+var serialPort = new SerialPort("COM2", 9600, Parity.None, 8, StopBits.One);
+
 serialPort.DataReceived += Common.DataHandler.DataReceived;
 serialPort.ErrorReceived += Common.DataHandler.ErrorReceived;
 serialPort.PinChanged += Common.DataHandler.PinChanged;

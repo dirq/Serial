@@ -12,11 +12,11 @@ Console.WriteLine("SENDER");
 //wait for the listener to start
 Thread.Sleep(500);
 
-var serialPort = new SerialPort("COM1", 9600);
+var serialPort = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
 serialPort.DataReceived += DataHandler.DataReceived;
 serialPort.ErrorReceived += Common.DataHandler.ErrorReceived;
 serialPort.PinChanged += Common.DataHandler.PinChanged;
-//load 894 file and pass it through the reciever
+//load 894 file and pass it through the receiver
 
 
 try

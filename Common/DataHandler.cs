@@ -9,7 +9,10 @@ namespace Common
             try
             {
                 var port = (SerialPort)sender;
-                Console.Write("From " + port.PortName + ": " + port.ReadExisting());
+                var data = port.ReadExisting();
+                Console.WriteLine($"Data received on {port.PortName}:");
+                Console.Write(data);
+                Console.WriteLine();
             }
             catch (IOException ex)
             {
